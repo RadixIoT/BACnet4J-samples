@@ -23,7 +23,7 @@ public class Garg2 {
     }
 
     static void whois() throws Exception {
-        Network network = new IpNetworkBuilder().broadcastIp("10.255.255.255").build();
+        Network network = new IpNetworkBuilder().withBroadcast("10.255.255.255", 8).build();
         Transport transport = new DefaultTransport(network);
         LocalDevice localDevice = new LocalDevice(1234, transport);
         localDevice.initialize();

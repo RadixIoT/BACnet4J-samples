@@ -4,17 +4,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.infiniteautomation</groupId>
 	<artifactId>bacnet4j-samples</artifactId>
-	<version>5.0.0-SNAPSHOT</version>
+	<version>${revision}</version>
 	<name>BACnet4J Sample Code</name>
+	<properties>
+		<revision>6.1.0-SNAPSHOT</revision>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<!--  <testSourceDirectory>src/test/java</testSourceDirectory> -->
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<release>10</release>
+					<release>17</release>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -23,7 +28,7 @@
 		<dependency>
 			<groupId>com.infiniteautomation</groupId>
 			<artifactId>bacnet4j</artifactId>
-			<version>5.0.0-SNAPSHOT</version>
+			<version>6.1.0</version>
 		</dependency>
 		<dependency>
             <groupId>org.slf4j</groupId>
@@ -31,4 +36,58 @@
             <version>1.8.0-beta2</version>
         </dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>Radix IoT Packages on Github</name>
+			<url>https://maven.pkg.github.com/radixiot/mango</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<profiles>
+		<profile>
+			<id>runnable-jar</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<version>3.6.0</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>shade</goal>
+								</goals>
+								<configuration>
+									<outputFile>${project.build.directory}/BACnetUnicastDiscovery.jar</outputFile>
+									<transformers>
+										<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+											<mainClass>com.infiniteautomation.bacnet4j.tools.UnicastDiscovery</mainClass>
+										</transformer>
+										<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+									</transformers>
+									<filters>
+										<filter>
+											<artifact>*:*</artifact>
+											<excludes>
+												<exclude>META-INF/*.SF</exclude>
+												<exclude>META-INF/*.DSA</exclude>
+												<exclude>META-INF/*.RSA</exclude>
+											</excludes>
+										</filter>
+									</filters>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

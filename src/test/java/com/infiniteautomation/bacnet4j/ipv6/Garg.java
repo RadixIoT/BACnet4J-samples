@@ -43,7 +43,7 @@ public class Garg {
 
             ThreadUtils.sleep(3000);
 
-            d = localDevice.getRemoteDevice(9876);
+            d = localDevice.getRemoteDevice(9876).get();
 
             ReadPropertyRequest req = new ReadPropertyRequest(d.getObjectIdentifier(), PropertyIdentifier.objectList,
                     null);

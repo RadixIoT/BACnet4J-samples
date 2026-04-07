@@ -42,7 +42,7 @@ public class Ipv6Master {
 
             ThreadUtils.sleep(3000);
 
-            d = localDevice.getRemoteDevice(1969);
+            d = localDevice.getRemoteDevice(1969).get();
 
             ReadPropertyRequest req = new ReadPropertyRequest(d.getObjectIdentifier(), PropertyIdentifier.objectList,
                     null);

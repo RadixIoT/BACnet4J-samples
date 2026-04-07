@@ -4,6 +4,7 @@ import com.serotonin.bacnet4j.LocalDevice;
 import com.serotonin.bacnet4j.npdu.ipv6.Ipv6Network;
 import com.serotonin.bacnet4j.obj.BACnetObject;
 import com.serotonin.bacnet4j.transport.DefaultTransport;
+import com.serotonin.bacnet4j.type.constructed.ValueSource;
 import com.serotonin.bacnet4j.type.enumerated.BinaryPV;
 import com.serotonin.bacnet4j.type.enumerated.ObjectType;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
@@ -15,7 +16,7 @@ public class Ipv6Slave {
         LocalDevice localDevice = new LocalDevice(9876, new DefaultTransport(new Ipv6Network("FF03::BAC0")));
 
         float av0Value = 0;
-        BACnetObject av0 = new BACnetObject(new ObjectIdentifier(ObjectType.analogValue, 0));
+        BACnetObject av0 = new BACnetObject(localDevice, new ObjectIdentifier(ObjectType.analogValue, 0));
         av0.writeProperty(PropertyIdentifier.presentValue, new Real(av0Value));
         localDevice.addObject(av0);
 

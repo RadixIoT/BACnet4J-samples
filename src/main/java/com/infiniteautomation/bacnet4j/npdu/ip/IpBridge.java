@@ -3,8 +3,6 @@
  */
 package com.infiniteautomation.bacnet4j.npdu.ip;
 
-import static org.junit.Assert.fail;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -139,9 +137,8 @@ public class IpBridge extends Thread implements Closeable {
             if (broadcastReceiverThread != null)
                 broadcastReceiverThread.join();
         } catch (InterruptedException e) {
-            fail(e.getMessage());
+            e.printStackTrace();
+            System.exit(-1);
         }
-
     }
-    
 }
